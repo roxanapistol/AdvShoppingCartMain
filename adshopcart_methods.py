@@ -32,7 +32,7 @@ def setUp():
     else:
         print(f'->{locators.app} did not launched, check your code or application.')
         print(f'->Current URL: {driver.current_url}, page title: {driver.title}')
-        tearDown()
+        
 
 
 def tearDown():
