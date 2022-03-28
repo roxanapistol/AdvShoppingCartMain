@@ -151,6 +151,7 @@ def delete_test_account():
     sleep(0.5)
     driver.find_element(By.CSS_SELECTOR, 'div.deletePopupBtn.deleteRed').click()
     sleep(3)
+    #driver.switch_to.alert.accept() # this is for pop-up windows
 
     #verify the account is deleted
     driver.find_element(By.ID, 'menuUser').click()
@@ -159,6 +160,8 @@ def delete_test_account():
     driver.find_element(By.NAME, 'username').send_keys(locators.username)
     sleep(0.5)
     driver.find_element(By.NAME, 'password').send_keys(locators.password)
+    sleep(0.5)
+    driver.find_element(By.ID, 'sign_in_btnundefined').click()
     sleep(0.5)
 
     if driver.find_element(By.ID, 'signInResultMessage').is_displayed():
@@ -178,7 +181,7 @@ def tearDown():
         driver.quit()
 
 
-# setUp()
+# setUp ()
 # sign_up()
 # check_full_name()
 # check_orders()
