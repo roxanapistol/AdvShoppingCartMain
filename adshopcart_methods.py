@@ -12,12 +12,10 @@ from selenium.webdriver import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 
-
-
-
-
 s = Service(executable_path='../chromedriver.exe')
 driver = webdriver.Chrome(service=s)
+
+
 
 def setUp():
     print(f'->Launch {locators.app} App.')
@@ -164,7 +162,8 @@ def delete_test_account():
     driver.find_element(By.ID, 'sign_in_btnundefined').click()
     sleep(0.5)
 
-    if driver.find_element(By.ID, 'signInResultMessage').is_displayed():
+    if driver.find_element(By.XPATH, '//*[@id="signInResultMessage"]'
+                                     '[contains(., "Incorrect user name or password")]').is_displayed():
         print(f'---You have successfully deleted the account of {locators.username}.---')
     else:
         print('Something is wrong.')
@@ -181,11 +180,11 @@ def tearDown():
         driver.quit()
 
 
-# setUp ()
-# sign_up()
-# check_full_name()
-# check_orders()
-# log_out()
-# log_in()
-# delete_test_account()
-# tearDown()
+setUp ()
+sign_up()
+check_full_name()
+check_orders()
+log_out()
+log_in()
+delete_test_account()
+tearDown()
