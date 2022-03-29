@@ -1,5 +1,5 @@
 import unittest
-# import adshopcart_locators as locators
+#import adshopcart_locators as locators
 import advantage_shopping_cart.adshopcart_methods as methods
 
 
@@ -15,6 +15,7 @@ class ShoppingCartPositiveTestCases(unittest.TestCase):
         methods.log_out()
         methods.log_in()
         methods.delete_test_account()
+        methods.check_homepage()
         methods.tearDown()
 
 

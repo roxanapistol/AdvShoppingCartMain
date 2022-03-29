@@ -1,3 +1,4 @@
+import datetime
 from faker import Faker
 fake = Faker(locale='en_CA')
 
@@ -19,4 +20,6 @@ address = fake.address().replace("\n", " ")[0: 50]
 province = fake.province()[0: 10]
 postal_code = fake.postcode()
 country = fake.current_country()
+
+subject = f'Today is: {datetime.datetime.now()}. '
 

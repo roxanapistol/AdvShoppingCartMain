@@ -39,6 +39,64 @@ def setUp():
         print(f'->Current URL: {driver.current_url}, page title: {driver.title}')
 
 
+def check_homepage():
+
+    driver.get(locators.adshopcart_url)
+
+    check_list1 = ["SPEAKERS", "TABLETS", "LAPTOPS", "MICE"]
+    for element in check_list1:
+        if driver.find_element(By.XPATH, f"//span[contains(., '{element}')]").is_displayed():
+            print(f"****We can see '{element}' link on the homepage.****")
+        else:
+            print("'{element}' link is not displayed on the homepage!")
+
+
+    check_list2 = ["SPECIAL OFFER", "POPULAR ITEMS", "CONTACT US"]
+    for item in check_list2:
+        if driver.find_element(By.XPATH, f'//a[contains(., "{item}")]').is_displayed():
+            sleep(0.5)
+            driver.find_element(By.XPATH, f'//a[contains(., "{item}")]').click()
+            sleep(1)
+            if driver.find_element(By.XPATH, f"//*[self::h1 or self::h3][contains(., '{item}')]").is_displayed():
+                sleep(0.5)
+                print(f'****{item} is displayed.****')
+            else:
+                print(f'{item} is not displayed.')
+
+
+
+
+    if driver.find_element(By.XPATH, '//span[contains(., "dvantage")]').is_displayed() \
+        and driver.find_element(By.XPATH, '//span[contains(., "DEMO")]').is_displayed():
+        sleep(0.5)
+        print(f'****The logo is displayed: dvantage DEMO.****')
+    else:
+        print('The logo is not displayed, check your code.')
+
+
+    driver.find_element(By.XPATH, '//h1[contains(.,"CONTACT US")]').is_displayed()
+    Select(driver.find_element(By.NAME, 'categoryListboxContactUs')).select_by_visible_text('Speakers')
+    sleep(0.25)
+    Select(driver.find_element(By.NAME, 'productListboxContactUs')).select_by_visible_text('HP Roar Mini Wireless Speaker')
+    sleep(0.5)
+    driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
+    sleep(0.5)
+    driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.subject)
+    sleep(0.5)
+    driver.find_element(By.ID, 'send_btnundefined').click()
+    sleep(0.5)
+    if driver.find_element(By.XPATH, '//*[@id="registerSuccessCover"]/div/a').is_displayed():
+        sleep(0.5)
+        print('****Continue shopping button is displayed.****')
+    else:
+        print('The Continue shopping is not displayed')
+
+
+
+
+
+
+
 def sign_up():
     print(f'---The new account is being created:---')
     driver.find_element(By.ID, 'menuUser').click()
@@ -180,11 +238,12 @@ def tearDown():
         driver.quit()
 
 
-setUp ()
-sign_up()
-check_full_name()
-check_orders()
-log_out()
-log_in()
-delete_test_account()
-tearDown()
+# setUp ()
+# sign_up()
+# check_full_name()
+# check_orders()
+# log_out()
+# log_in()
+# delete_test_account()
+# check_homepage()
+# tearDown()
