@@ -10,6 +10,7 @@ import advantage_shopping_cart.adshopcart_locators as locators
 from selenium.webdriver.support.ui import Select  # this is for drop down lists
 from selenium.webdriver import Keys
 from selenium.common.exceptions import NoSuchElementException
+import random
 
 
 s = Service(executable_path='../chromedriver.exe')
@@ -43,16 +44,17 @@ def check_homepage():
 
     driver.get(locators.adshopcart_url)
 
-    check_list1 = ["SPEAKERS", "TABLETS", "LAPTOPS", "MICE"]
-    for element in check_list1:
+
+    for element in locators.check_list1:
         if driver.find_element(By.XPATH, f"//span[contains(., '{element}')]").is_displayed():
             print(f"****We can see '{element}' link on the homepage.****")
+            sleep(0.5)
         else:
             print("'{element}' link is not displayed on the homepage!")
 
 
-    check_list2 = ["SPECIAL OFFER", "POPULAR ITEMS", "CONTACT US"]
-    for item in check_list2:
+
+    for item in locators.check_list2:
         if driver.find_element(By.XPATH, f'//a[contains(., "{item}")]').is_displayed():
             sleep(0.5)
             driver.find_element(By.XPATH, f'//a[contains(., "{item}")]').click()
@@ -75,10 +77,17 @@ def check_homepage():
 
 
     driver.find_element(By.XPATH, '//h1[contains(.,"CONTACT US")]').is_displayed()
-    Select(driver.find_element(By.NAME, 'categoryListboxContactUs')).select_by_visible_text('Speakers')
-    sleep(0.25)
-    Select(driver.find_element(By.NAME, 'productListboxContactUs')).select_by_visible_text('HP Roar Mini Wireless Speaker')
     sleep(0.5)
+
+    category = locators.categories[random.randint(0, len(locators.categories) - 1)]
+    Select(driver.find_element(By.NAME, 'categoryListboxContactUs')).select_by_visible_text(category)
+    sleep(0.25)
+
+    product_options = driver.find_elements(By.XPATH, '//select[@name="productListboxContactUs"]/option')
+    product = product_options[random.randint(1, len(product_options) - 1)].text
+    Select(driver.find_element(By.NAME, 'productListboxContactUs')).select_by_visible_text(product)
+    sleep(0.5)
+
     driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
     sleep(0.5)
     driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.subject)
@@ -86,6 +95,8 @@ def check_homepage():
     driver.find_element(By.ID, 'send_btnundefined').click()
     sleep(0.5)
     if driver.find_element(By.XPATH, '//*[@id="registerSuccessCover"]/div/a').is_displayed():
+        sleep(0.5)
+        driver.find_element(By.XPATH, '//*[@id="registerSuccessCover"]/div/a').click()
         sleep(0.5)
         print('****Continue shopping button is displayed.****')
     else:
@@ -104,7 +115,7 @@ def sign_up():
     driver.find_element(By.CSS_SELECTOR, 'a.create-new-account').click()
     sleep(0.5)
     driver.find_element(By.NAME, 'usernameRegisterPage').send_keys(locators.username)
-    sleep(0.5)
+    sleep(1)
     driver.find_element(By.NAME, 'emailRegisterPage').send_keys(locators.email)
     sleep(0.5)
     driver.find_element(By.NAME, 'passwordRegisterPage').send_keys(locators.password)
@@ -136,7 +147,7 @@ def sign_up():
 
 def check_full_name():
     driver.find_element(By.ID, 'menuUser').click()
-    sleep(0.5)
+    sleep(3)
     #driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[contains(., "My account")]').click()
     #driver.find_element(By.XPATH, '//div[@id="loginMiniTitle"]/label[@translate="My_account"]').click()
     driver.find_element(By.CSS_SELECTOR, 'div#loginMiniTitle > label[translate = "My_account"]').click()
@@ -238,12 +249,12 @@ def tearDown():
         driver.quit()
 
 
-# setUp ()
-# sign_up()
-# check_full_name()
-# check_orders()
-# log_out()
-# log_in()
-# delete_test_account()
-# check_homepage()
-# tearDown()
+setUp ()
+sign_up()
+check_full_name()
+check_orders()
+log_out()
+log_in()
+delete_test_account()
+check_homepage()
+tearDown()
