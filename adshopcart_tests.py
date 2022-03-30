@@ -1,6 +1,7 @@
 import unittest
 #import adshopcart_locators as locators
 import advantage_shopping_cart.adshopcart_methods as methods
+#import adshopcart_methods as methods
 
 
 
